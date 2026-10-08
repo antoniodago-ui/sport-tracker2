@@ -1,0 +1,214 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le mie attività sportive</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#2563eb"><script src="config.js"></script>
+
+<style>
+:root{
+  --bg:#f5f7fa;--panel:#fff;--text:#18202a;--muted:#6b7280;
+  --border:#e2e7ee;--accent:#2563eb;--accent2:#1d4ed8;--danger:#b42318;
+  --shadow:0 8px 24px rgba(20,32,50,.07)
+}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.45}
+.wrap{width:min(100% - 28px,980px);margin:0 auto;padding:24px 0 48px}
+h1{font-size:28px;margin:0 0 18px;letter-spacing:-.4px}h2{font-size:20px;margin:0 0 14px}h3{margin:18px 0 10px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--panel);border:1px solid var(--border);padding:7px;border-radius:15px;box-shadow:var(--shadow);margin-bottom:18px}
+button,select,input,textarea{font:inherit}
+.btn{min-height:42px;padding:9px 13px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);cursor:pointer;transition:.15s}
+.btn:hover{border-color:#b9c4d2;background:#f9fafb}
+nav .btn{border:0;background:transparent;font-weight:600}
+nav .btn.active{background:var(--accent);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.2)}
+.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}.primary:hover{background:var(--accent2)}
+.page{display:none}.page.active{display:block}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;margin:10px 0;box-shadow:0 3px 12px rgba(20,32,50,.035)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.grid .card{margin:0;min-width:0}.grid small{display:block;color:var(--muted);font-size:13px}.grid h2{font-size:24px;margin:5px 0 0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+label{display:block;font-size:13px;font-weight:600;color:#394150}
+input,select,textarea{width:100%;min-height:43px;margin-top:5px;padding:10px 11px;border:1px solid #cfd7e2;border-radius:9px;background:#fff;color:var(--text);outline:none}
+textarea{min-height:82px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.row{display:flex;justify-content:space-between;gap:14px;align-items:center}.muted{color:var(--muted);font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.filters{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.filters label{flex:1;min-width:180px;max-width:260px}.danger{color:var(--danger);border-color:#f1c8c4}
+#recent .card{padding:13px 15px}
+#sportStats,#goalList{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#sportStats .card,#goalList .card{margin:0;min-width:0}
+
+.calendar-head{display:grid;grid-template-columns:46px 1fr 46px;align-items:center;gap:10px;margin-bottom:12px}
+.calendar-head h2{text-align:center;margin:0}
+.calendar-head .btn{font-size:24px;padding:4px}
+.calendar-week,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.calendar-week{margin-bottom:6px}.calendar-week span{text-align:center;color:var(--muted);font-size:12px;font-weight:700;padding:5px 0}
+.day{min-height:105px;background:var(--panel);border:1px solid var(--border);border-radius:11px;padding:8px;overflow:hidden}
+.day.out{opacity:.38}.day.today{border:2px solid var(--accent);padding:7px}
+.day-number{font-size:13px;font-weight:700;margin-bottom:6px}
+.event{display:block;width:100%;font-size:11px;line-height:1.25;padding:5px 6px;margin:4px 0;border-radius:7px;background:#eef4ff;border:1px solid #dbe7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.event strong{font-size:11px}.calendar-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:12px}
+.calendar-legend span{display:flex;align-items:center;gap:5px}.dot{width:8px;height:8px;border-radius:50%;background:#94a3b8}.dot.bici{background:#2563eb}.dot.corsa{background:#16a34a}.dot.padel{background:#ea580c}
+@media(max-width:650px){.calendar-week,.calendar-grid{gap:3px}.day{min-height:78px;padding:5px;border-radius:8px}.day.today{padding:4px}.day-number{font-size:11px;margin-bottom:3px}.event{font-size:9px;padding:3px;margin:2px 0}.event strong{font-size:9px}}
+
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 18px}
+.chart-card{margin:0}.chart-title{font-weight:700;margin-bottom:14px}
+.bar-chart{min-height:210px;display:flex;align-items:flex-end;gap:10px;padding:12px 4px 0;border-bottom:1px solid var(--border)}
+.bar-col{flex:1;min-width:0;height:180px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}
+.bar-value{font-size:11px;font-weight:700;color:var(--muted)}
+.bar{width:min(44px,72%);min-height:2px;background:var(--accent);border-radius:7px 7px 2px 2px;transition:.2s}
+.bar-label{width:100%;font-size:10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.empty-chart{margin:auto;color:var(--muted);font-size:13px;align-self:center}
+@media(max-width:760px){.chart-grid{grid-template-columns:1fr}.bar-chart{min-height:190px}.bar-col{height:160px}}
+
+@media(max-width:760px){
+ .wrap{width:min(100% - 20px,980px);padding-top:14px}h1{font-size:23px}
+ nav{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}
+ .fields{grid-template-columns:1fr}#sportStats,#goalList{grid-template-columns:1fr}
+ .row{align-items:flex-start}.row>div:last-child{flex-shrink:0}
+}
+@media(max-width:460px){
+ .grid{grid-template-columns:1fr 1fr}.grid h2{font-size:21px}
+ .card{padding:13px}.filters label{max-width:none;width:100%}
+ #recent .row{display:block}#recent .row>div:last-child{margin-top:10px}
+ .actions .btn{flex:1}.wrap{width:min(100% - 14px,980px)}
+}
+</style></head>
+<body><div class="wrap"><h1>Le mie attività sportive</h1><div class="card" id="cloudPanel"><b>Sincronizzazione cloud</b><p id="cloudStatus" class="muted">Configura Supabase per attivare Google.</p><div class="actions"><button class="btn primary" id="googleLogin" type="button" style="display:none">Accedi con Google</button><button class="btn" id="googleLogout" type="button" style="display:none">Esci</button><button class="btn" id="cloudImport" type="button" style="display:none">Carica i dati locali nel cloud</button></div></div><div class="actions" style="margin:0 0 14px"><button class="btn" type="button" id="backupBtn">Esporta backup</button><button class="btn" type="button" id="restoreBtn">Importa backup</button><input id="restoreFile" type="file" accept=".json,application/json" style="display:none"></div>
+<nav><button class="btn active" data-page="home">Home</button><button class="btn" data-page="calendar">Calendario</button><button class="btn" data-page="stats">Statistiche</button><button class="btn" data-page="goals">Obiettivi</button></nav>
+
+<section id="home" class="page active"><div id="totals" class="grid"></div>
+<div class="card"><h2 id="formTitle">Nuova attività</h2><form id="form"><input type="hidden" id="editId"><div class="fields">
+<label>Sport<select id="sport" required><option value="Bici">Bici</option><option value="Corsa">Corsa</option><option value="Padel">Padel</option></select></label>
+<label>Data<input id="date" type="date" required></label><label>Durata (minuti)<input id="duration" type="number" min="1" required></label>
+<label>Distanza (km)<input id="distance" type="number" min="0" step="0.1"></label><label>Calorie<input id="calories" type="number" min="0"></label>
+<label>Note<textarea id="notes"></textarea></label></div><div class="actions"><button class="btn primary" type="submit">Salva</button><button class="btn" type="button" id="cancel" style="display:none">Annulla</button><button class="btn" type="button" id="addSport">+ Aggiungi sport</button></div></form></div>
+<h2>Ultime attività</h2><div id="recent"></div></section>
+
+<section id="calendar" class="page">
+<div class="calendar-head">
+  <button class="btn" id="prevMonth" type="button">‹</button>
+  <h2 id="calendarTitle">Calendario</h2>
+  <button class="btn" id="nextMonth" type="button">›</button>
+</div>
+<div class="calendar-week"><span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span></div>
+<div id="calendarGrid" class="calendar-grid"></div>
+<div class="calendar-legend"><span><i class="dot bici"></i>Bici</span><span><i class="dot corsa"></i>Corsa</span><span><i class="dot padel"></i>Padel</span></div>
+</section>
+
+<section id="stats" class="page"><h2>Statistiche</h2>
+<div class="filters"><label>Mese<select id="monthFilter"><option value="all">Tutto l'anno</option></select></label><label>Anno<select id="yearFilter"></select></label></div>
+<div id="statsTotals" class="grid"></div>
+<div class="chart-grid">
+ <div class="card chart-card"><div class="chart-title">Allenamenti per sport</div><div id="sportChart" class="bar-chart"></div></div>
+ <div class="card chart-card"><div class="chart-title" id="trendTitle">Andamento</div><div id="trendChart" class="bar-chart"></div></div>
+</div>
+<h3>Dettaglio per sport</h3><div id="sportStats"></div></section>
+
+<section id="goals" class="page"><h2>Obiettivi mensili per sport</h2><p class="muted">Gli obiettivi sono distinti per ogni sport.</p><div id="goalList"></div></section>
+</div>
+<script>
+(function(){
+var KEY='sportTrackerStableV3';
+var baseSports=['Bici','Corsa','Padel'];
+var defaultGoals={Bici:{sessions:8,km:200,min:600},Corsa:{sessions:8,km:50,min:400},Padel:{sessions:6,km:0,min:480}};
+var state={sports:baseSports.slice(),activities:[],goals:JSON.parse(JSON.stringify(defaultGoals))};
+var calDate=new Date();
+function el(id){return document.getElementById(id)}
+function safe(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function load(){
+ try{
+  var x=JSON.parse(localStorage.getItem(KEY)||'{}');
+  if(x && Array.isArray(x.sports) && x.sports.length) state.sports=x.sports;
+  if(x && Array.isArray(x.activities)) state.activities=x.activities;
+  if(x && x.goals) for(var k in x.goals) state.goals[k]=x.goals[k];
+ }catch(e){}
+ baseSports.forEach(function(s){if(state.sports.indexOf(s)<0)state.sports.push(s);if(!state.goals[s])state.goals[s]=defaultGoals[s]});
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}if(window.cloudSync&&window.cloudSync.queueSave)window.cloudSync.queueSave(state)}
+function fillSports(){
+ var sel=el('sport'), chosen=sel.value; sel.innerHTML='';
+ state.sports.forEach(function(s){var o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o)});
+ if(state.sports.indexOf(chosen)>=0)sel.value=chosen;
+}
+function sum(a){var r={n:0,km:0,min:0,cal:0};a.forEach(function(x){r.n++;r.km+=Number(x.distance)||0;r.min+=Number(x.duration)||0;r.cal+=Number(x.calories)||0});return r}
+function metrics(t){return '<div class="card"><small>Attività</small><h2>'+t.n+'</h2></div><div class="card"><small>Km</small><h2>'+t.km.toFixed(1)+'</h2></div><div class="card"><small>Minuti</small><h2>'+t.min+'</h2></div><div class="card"><small>Calorie</small><h2>'+Math.round(t.cal)+'</h2></div>'}
+function row(a){return '<div class="card row"><div><b>'+safe(a.sport)+'</b><div class="muted">'+a.date+' · '+a.duration+' min'+(a.distance?' · '+a.distance+' km':'')+'</div></div><div><button class="btn edit" data-id="'+a.id+'">Modifica</button> <button class="btn danger del" data-id="'+a.id+'">Elimina</button></div></div>'}
+function filterStats(){var y=Number(el('yearFilter').value),m=el('monthFilter').value;return state.activities.filter(function(a){var p=a.date.split('-');return Number(p[0])===y&&(m==='all'||Number(p[1])===Number(m))})}
+
+function renderCalendar(){
+ var y=calDate.getFullYear(),m=calDate.getMonth();
+ var monthNames=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+ el('calendarTitle').textContent=monthNames[m]+' '+y;
+ var first=new Date(y,m,1), offset=(first.getDay()+6)%7;
+ var start=new Date(y,m,1-offset), today=new Date();
+ var h='';
+ for(var i=0;i<42;i++){
+  var d=new Date(start);d.setDate(start.getDate()+i);
+  var ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  var classes='day'+(d.getMonth()!==m?' out':'')+(d.toDateString()===today.toDateString()?' today':'');
+  var acts=state.activities.filter(function(a){return a.date===ds});
+  h+='<div class="'+classes+'"><div class="day-number">'+d.getDate()+'</div>';
+  acts.forEach(function(a){h+='<div class="event" title="'+safe(a.sport)+' · '+a.duration+' min"><strong>'+safe(a.sport)+'</strong> '+a.duration+'m</div>'});
+  h+='</div>';
+ }
+ el('calendarGrid').innerHTML=h;
+}
+
+function drawBars(target,items){
+ var box=el(target),max=0;
+ items.forEach(function(x){if(x.value>max)max=x.value});
+ if(!items.length||max<=0){box.innerHTML='<div class="empty-chart">Nessun dato nel periodo selezionato.</div>';return}
+ box.innerHTML=items.map(function(x){
+   var pct=Math.max(2,Math.round((x.value/max)*100));
+   return '<div class="bar-col"><div class="bar-value">'+x.value+'</div><div class="bar" style="height:'+pct+'%"></div><div class="bar-label" title="'+safe(x.label)+'">'+safe(x.label)+'</div></div>';
+ }).join('');
+}
+function renderStats(){
+ var f=filterStats(),total=sum(f);
+ el('statsTotals').innerHTML=metrics(total);
+ var h='',sportBars=[];
+ state.sports.forEach(function(s){
+   var t=sum(f.filter(function(a){return a.sport===s}));
+   sportBars.push({label:s,value:t.n});
+   h+='<div class="card"><b>'+safe(s)+'</b><p>Allenamenti: '+t.n+' · Km: '+t.km.toFixed(1)+' · Minuti: '+t.min+' · Calorie: '+Math.round(t.cal)+'</p></div>';
+ });
+ el('sportStats').innerHTML=h;
+ drawBars('sportChart',sportBars);
+ var y=Number(el('yearFilter').value),m=el('monthFilter').value,trend=[];
+ if(m==='all'){
+   el('trendTitle').textContent='Allenamenti per mese';
+   var short=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+   for(var mm=1;mm<=12;mm++){
+     var n=state.activities.filter(function(a){var p=a.date.split('-');return Number(p[0])===y&&Number(p[1])===mm}).length;
+     trend.push({label:short[mm-1],value:n});
+   }
+ }else{
+   el('trendTitle').textContent='Allenamenti per giorno';
+   var days=new Date(y,Number(m),0).getDate();
+   for(var d=1;d<=days;d++){
+     var ds=y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+     var n=state.activities.filter(function(a){return a.date===ds}).length;
+     trend.push({label:String(d),value:n});
+   }
+ }
+ drawBars('trendChart',trend);
+}
+function renderGoals(){var h='';state.sports.forEach(function(s){var g=state.goals[s]||{sessions:4,km:0,min:240};h+='<div class="card"><div class="row"><div><b>'+safe(s)+'</b><div>Allenamenti: '+g.sessions+' · Km: '+g.km+' · Minuti: '+g.min+'</div></div><button class="btn goal" data-sport="'+safe(s)+'">Modifica</button></div></div>'});el('goalList').innerHTML=h}
+function render(){fillSports();var sorted=state.activities.slice().sort(function(a,b){return b.date.localeCompare(a.date)});el('totals').innerHTML=metrics(sum(state.activities));el('recent').innerHTML=sorted.length?sorted.slice(0,8).map(row).join(''):'<p class="muted">Nessuna attività.</p>';renderCalendar();renderStats();renderGoals();save()}
+function reset(){el('form').reset();el('editId').value='';el('formTitle').textContent='Nuova attività';el('cancel').style.display='none';el('date').value=new Date().toISOString().slice(0,10);fillSports()}
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){document.querySelectorAll('nav button').forEach(function(x){x.classList.remove('active')});document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active')});b.classList.add('active');el(b.getAttribute('data-page')).classList.add('active')}})
+el('form').onsubmit=function(e){e.preventDefault();var id=el('editId').value;var a={id:id?Number(id):Date.now(),sport:el('sport').value,date:el('date').value,duration:Number(el('duration').value),distance:Number(el('distance').value)||0,calories:Number(el('calories').value)||0,notes:el('notes').value};if(id){state.activities=state.activities.map(function(x){return x.id===Number(id)?a:x})}else state.activities.push(a);reset();render()}
+el('cancel').onclick=reset;
+el('addSport').onclick=function(){var s=prompt('Nome del nuovo sport:');if(!s)return;s=s.trim();if(!s)return;if(state.sports.some(function(x){return x.toLowerCase()===s.toLowerCase()})){alert('Sport già presente');return}state.sports.push(s);state.goals[s]={sessions:4,km:0,min:240};render();el('sport').value=s}
+document.addEventListener('click',function(e){var id=Number(e.target.getAttribute('data-id'));if(e.target.classList.contains('del')){if(confirm('Eliminare questa attività?')){state.activities=state.activities.filter(function(x){return x.id!==id});render()}}if(e.target.classList.contains('edit')){var a=state.activities.find(function(x){return x.id===id});if(!a)return;el('editId').value=a.id;el('sport').value=a.sport;el('date').value=a.date;el('duration').value=a.duration;el('distance').value=a.distance;el('calories').value=a.calories;el('notes').value=a.notes||'';el('formTitle').textContent='Modifica attività';el('cancel').style.display='inline-block';document.querySelector('[data-page="home"]').click()}if(e.target.classList.contains('goal')){var s=e.target.getAttribute('data-sport'),g=state.goals[s]||{sessions:4,km:0,min:240};var n=prompt('Allenamenti mensili - '+s,g.sessions);if(n===null)return;var km=prompt('Km mensili - '+s+' (0 disattiva)',g.km);if(km===null)return;var min=prompt('Minuti mensili - '+s,g.min);if(min===null)return;state.goals[s]={sessions:Math.max(1,Number(n)||1),km:Math.max(0,Number(km)||0),min:Math.max(1,Number(min)||1)};render()}})
+var names=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'], now=new Date();
+names.forEach(function(n,i){var o=document.createElement('option');o.value=i+1;o.textContent=n;el('monthFilter').appendChild(o)});
+for(var y=now.getFullYear()+1;y>=now.getFullYear()-10;y--){var o=document.createElement('option');o.value=y;o.textContent=y;el('yearFilter').appendChild(o)}
+el('prevMonth').onclick=function(){calDate.setDate(1);calDate.setMonth(calDate.getMonth()-1);renderCalendar()};
+el('nextMonth').onclick=function(){calDate.setDate(1);calDate.setMonth(calDate.getMonth()+1);renderCalendar()};
+el('monthFilter').value=now.getMonth()+1;el('yearFilter').value=now.getFullYear();el('monthFilter').onchange=renderStats;el('yearFilter').onchange=renderStats;
+
+el('backupBtn').onclick=function(){var blob=new Blob([JSON.stringify({format:'sport-tracker-backup',version:1,data:state},null,2)],{type:'application/json'});var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='backup-sport-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},1000)};
+el('restoreBtn').onclick=function(){el('restoreFile').click()};
+el('restoreFile').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var x=JSON.parse(r.result);if(x.format!=='sport-tracker-backup'||x.version!==1||!x.data||!Array.isArray(x.data.sports)||!Array.isArray(x.data.activities)||!x.data.goals||typeof x.data.goals!=='object')throw Error('Formato non valido');if(!x.data.activities.every(function(a){return a&&typeof a.date==='string'&&typeof a.sport==='string'&&Number.isFinite(Number(a.duration))}))throw Error('Attività non valide');if(!confirm('Sostituire i dati attuali con quelli del backup?'))return;state={sports:x.data.sports.slice(),activities:x.data.activities.slice(),goals:x.data.goals};baseSports.forEach(function(s){if(state.sports.indexOf(s)<0)state.sports.push(s);if(!state.goals[s])state.goals[s]=defaultGoals[s]});reset();render();alert('Backup ripristinato')}catch(err){alert('Errore importazione: '+err.message)}el('restoreFile').value=''};r.readAsText(f)};
+
+window.sportApp={getState:function(){return state},setState:function(s){state=s;reset();render()},key:KEY};load();reset();render();
+})();
+</script><script type="module" src="cloud.js"></script></body></html>

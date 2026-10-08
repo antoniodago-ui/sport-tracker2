@@ -1,0 +1,8 @@
+{
+  "name": "Le mie attività sportive",
+  "short_name": "Sport",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f5f7",
+  "theme_color": "#202124"
+}
